@@ -10,4 +10,4 @@ rootProject.name = "RU-SIRS"
 
 include(":site")
 include(":local")
-//include(":common")
+include(":common")
