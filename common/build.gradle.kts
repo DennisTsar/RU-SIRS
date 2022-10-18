@@ -17,7 +17,13 @@ kotlin {
             dependencies {
                 implementation(libs.serialization)
                 implementation(libs.coroutines)
-//                implmenetation(libs.bundles.ktor.local)
+                implementation(libs.bundles.ktor.main)
+            }
+        }
+
+        val jvmMain by getting{
+            dependencies {
+                implementation(libs.ktor.client.cio)
             }
         }
     }

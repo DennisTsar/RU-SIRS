@@ -24,9 +24,9 @@ coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version
 
 [bundles]
 kobweb = ["kobweb-core", "kobweb-silk-core", "kobweb-silk-icons-fa"]
-ktor-local = [
-    "ktor-client-core", "ktor-client-cio", "ktor-client-encoding", "ktor-client-logging",
-    "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"
+ktor-main = [
+    "ktor-client-core", "ktor-client-encoding", "ktor-client-logging", "ktor-client-serialization",
+    "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"
 ]
 
 [plugins]
