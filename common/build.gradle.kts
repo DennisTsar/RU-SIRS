@@ -16,6 +16,8 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(libs.serialization)
+                implementation(libs.coroutines)
+//                implmenetation(libs.bundles.ktor.local)
             }
         }
     }
