@@ -11,7 +11,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
 import kotlinx.serialization.json.Json
 
-class GithubSource : RemoteApi, EntriesFromFileSource, SchoolsMapSource {
+class GithubSource : RemoteApi, EntriesFromFileSource, SchoolsMapSource, ExtraDataSource {
     private val ghClient = client.config {
         install(ContentNegotiation) {
             serialization(ContentType.Text.Plain, Json)
@@ -33,4 +33,10 @@ class GithubSource : RemoteApi, EntriesFromFileSource, SchoolsMapSource {
 
     override suspend fun getSchoolsMap(): Map<String, School> =
         ghClient.get("extra-json-data/schoolDeptsMap.json").body()
+
+    override suspend fun getInstructors(term: String): Map<String, List<String>> =
+        ghClient.get("extra-json-data/$term-instructors.json").body()
+
+    override suspend fun getDeptMap(): Map<String, String> =
+        ghClient.get("extra-json-data/deptNamesMap.json").body()
 }
