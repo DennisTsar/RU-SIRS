@@ -30,6 +30,10 @@ jobs:
       # Validate wrapper
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
+        
+      # Switch to /site directory
+      - name: Move to subdirectory
+        run: cd site
 
       # Build application
       - name: Build
