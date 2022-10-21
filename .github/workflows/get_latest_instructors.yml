@@ -1,5 +1,6 @@
 name: Get Latest Instructors
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 0,12 * * *"
 jobs:
