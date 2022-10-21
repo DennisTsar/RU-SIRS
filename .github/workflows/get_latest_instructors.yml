@@ -1,0 +1,35 @@
+name: Get Latest Instructors
+on:
+  schedule:
+    - cron: "0 0,12 * * *"
+jobs:
+  run:
+    name: Get & Commit
+    runs-on: ubuntu-latest
+    steps:
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+
+      # Set up Java environment for the next steps
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
+
+      # Validate wrapper
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      # Build & run application - update instructors file
+      - name: Run
+        run: ./gradlew local:run --args="-instructor"
+        
+      # Update repo with generated file
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '*.json --force'
+          default_author: github_actions
+          message: 'Updated latest instructors'
