@@ -1,6 +1,0 @@
-[submodule "site"]
-	path = site
-	url = https://github.com/DennisTsar/sirs_kobweb
-[submodule "local"]
-	path = local
-	url = https://github.com/DennisTsar/Rutgers-SIRS
