@@ -37,6 +37,8 @@ jobs:
           git config --global user.email github-actions@github.com
           git add .
           git commit -m "Updated latest instructors"
+          git push
           cd ..
           git add local
           git commit -m "Updated latest instructors"
+          git push
