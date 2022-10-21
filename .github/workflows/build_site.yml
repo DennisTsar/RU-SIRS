@@ -34,7 +34,7 @@ jobs:
       # Build application
       - name: Build
         run: kobweb export --layout static --mode dumb # "dumb" prevents java awt display error
-        working-directory: site
+        working-directory: ./site
 
       # If main branch update, deploy to gh-pages
       - name: Deploy 🚀
