@@ -1,0 +1,44 @@
+name: Build Site
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+
+      # Set up Java environment for the next steps
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
+          
+      # Set up Homebrew
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      # Installing Kobweb with brew
+      - name: Install Kobweb
+        run: brew install varabyte/tap/kobweb
+
+      # Validate wrapper
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      # Build application
+      - name: Build
+        run: kobweb export --layout static --mode dumb # "dumb" prevents java awt display error
+
+      # If main branch update, deploy to gh-pages
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/docs # The folder the action should deploy.
+          clean-exclude: 404.html
