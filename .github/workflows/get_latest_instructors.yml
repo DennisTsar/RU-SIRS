@@ -31,8 +31,10 @@ jobs:
         
       # Update repo with generated file
       - name: Add & Commit
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '*.json --force'
-          default_author: github_actions
-          message: 'Updated latest instructors'
+      - run: |
+          cd local
+          git add .
+          git commit -m "Updated latest instructors"
+          cd ..
+          git add local
+          git commit -m "Updated latest instructors"
