@@ -29,6 +29,13 @@ jobs:
       - name: Run
         run: ./gradlew local:run --args="-instructor"
         
+      - name: Checkout submodule
+        uses: actions/checkout@v3
+        with:
+          repository: DennisTsar/Rutgers-SIRS
+          token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
+          path: local
+        
       # Update repo with generated file
       - name: Add & Commit
         run: |
@@ -37,10 +44,5 @@ jobs:
           git config --global user.email github-actions@github.com
           git checkout master
           git add .
-          git commit -m "Updated latest instructors"
-          git push
-          cd ..
-          git checkout master
-          git add local
           git commit -m "Updated latest instructors"
           git push
