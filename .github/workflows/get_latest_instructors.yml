@@ -39,10 +39,8 @@ jobs:
       # Update repo with generated file
       - name: Add & Commit
         run: |
-          cd local
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          git checkout master
           git add .
           git commit -m "Updated latest instructors"
           git push
