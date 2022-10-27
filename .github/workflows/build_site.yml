@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - local/**
 jobs:
   build:
     name: Build
