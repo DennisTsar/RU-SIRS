@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths-ignore:
-      - local/**
+      - 'local/**'
 jobs:
   build:
     name: Build
