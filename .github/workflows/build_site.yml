@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'Rutgers-SIRS/**'
+      - 'local'
 jobs:
   build:
     name: Build
