@@ -208,6 +208,17 @@ val moreQs = listOf(
     "What letter grade do you expect in the course?",
     "What was your GPA for previous Economics courses?",
     "Written assignments, quizzes and exams are appropriately designed and instructive",
+    // starting here are the new questions, so list is no longer sorted to not affect existing numbering
+    "I plan to use or share what I learned",
+    "I will make changes in my personal or business activities based on this presentation",
+    "Information presented was consistent with program description and objectives",
+    "Information was valuable",
+    "Materials/handouts were useful",
+    "Overall instruction and teaching was",
+    "Overall program content and presentation",
+    "Presenter was easy to understand",
+    "Presenter was well prepared",
+    "Questions were clearly answered",
 )
 
 val QsMap = (TenQs + moreQs).withIndex().associateBy({ it.value }, { it.index.toString() })

@@ -4,7 +4,7 @@ import EntriesByProf
 import EntriesByProfMap
 import Entry
 import School
-import generateSchoolsMap
+import generateSchoolMap
 
 interface EntriesFromFileSource : EntriesSource {
     suspend fun getEntriesFromDir(school: String, dept: String, folderNum: Int = 9): List<Entry>
@@ -18,5 +18,7 @@ interface EntriesFromFileSource : EntriesSource {
         getEntriesByProfFromDir(school, dept)
 
     suspend fun getAllLatestEntriesByProf(schools: Collection<School>): EntriesByProfMap =
-        schools.generateSchoolsMap { school, dept -> getLatestEntriesByProfInDept(school, dept) }
+        schools.generateSchoolMap { school, dept -> getLatestEntriesByProfInDept(school, dept) }
+
+    suspend fun getDirSchoolMap(dataDir: String): Map<String, School>
 }

@@ -7,7 +7,7 @@ data class School(
     val depts: Set<String>,
 )
 
-suspend fun <T> Collection<School>.generateSchoolsMap(
+suspend fun <T> Collection<School>.generateSchoolMap(
     generator: suspend (school: String, dept: String) -> T,
 ): SchoolDeptsMap<T> {
     return pmap { school ->
