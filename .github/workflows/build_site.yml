@@ -5,6 +5,7 @@ on:
       - master
     paths-ignore:
       - 'local'
+      - '.idea/**'
 jobs:
   build:
     name: Build
