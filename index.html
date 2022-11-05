@@ -17,8 +17,17 @@
         }
       }(window.location))
   </script> <!--For gh-pages 404 redirects. Credit: https://github.com/rafgraph/spa-github-pages--> 
-  <script src="/RU-SIRS/text-balancer.js"></script> 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet"> 
+  <script src="../balancetext.min.js"></script>
+  <script>
+    balanceText();
+  </script>
+  <style type="text/css">
+  /* Apply (proposed) CSS style. Plugin looks for elements with class named "balance-text" */
+  .balance-text {
+    text-wrap: balance;
+  }
+  </style>
  </head> 
  <body> 
   <div id="root">
