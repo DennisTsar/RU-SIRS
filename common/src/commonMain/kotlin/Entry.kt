@@ -42,7 +42,12 @@ class Entry(
             if (mappedQs == QsMap.values.toList()) null else mappedQs
         }
     )
-//    val shortTerm = term.first()+term.takeLast(2)
+
+    val semYear
+        get() = with(term.split("  ")) { SemYear(Semester.valueOf(first()), last().toInt()) }
+
+    val course
+        get() = code.split(':')[2]
 
     override fun toString(): String {
         return "$instructor, $term, $code, $courseName, $indexNum, $note, $enrolled, $responses, size:${scores.size}, $questions"
