@@ -11,7 +11,7 @@ fun List<Entry>.getTotalRatings(): Ratings {
     }.combine()
 }
 
-fun Collection<Ratings>.combine(): Ratings {
+private fun Collection<Ratings>.combine(): Ratings {
     return reduce { accByQuestion, responsesByQ ->
         // nums from each entry get zipped with each other, by question
         accByQuestion.zip(responsesByQ) { accRatings, ratings ->
@@ -28,8 +28,8 @@ fun List<Int>.getRatingStats(): Pair<Double, Int> {
     return ave.roundToDecimal(2) to numResponses
 }
 
-// returns list of Pair(average, # responses) for each question
-// consider removing this function since it's trivial to re-implement when needed
-fun Ratings.getRatingStats(): List<Pair<Double, Int>> {
-    return map { it.getRatingStats() }
+fun List<Int>.getRatingAve(): Double = getRatingStats().first
+
+fun Ratings.getRatingStats(): Pair<List<Double>, Int> { // list of aves per question + ave # of responses
+    return map { it.getRatingAve() } to map { it.sum() }.average().toInt()
 }
