@@ -5,6 +5,10 @@ data class SemYear(val semester: Semester, val year: Int) : Comparable<SemYear> 
         else
             semester.compareTo(other.semester)
     }
+
+    constructor(num: Int) : this(Semester.values()[num % 2], num / 2)
+
+    fun toInt() = year * 2 + if (semester == Semester.Spring) 0 else 1
 }
 
 enum class Semester(val num: Int) {
