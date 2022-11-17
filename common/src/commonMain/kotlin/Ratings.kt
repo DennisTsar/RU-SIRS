@@ -30,6 +30,6 @@ fun List<Int>.getRatingStats(): Pair<Double, Int> {
 
 fun List<Int>.getRatingAve(): Double = getRatingStats().first
 
-fun Ratings.getRatingStats(): Pair<List<Double>, Int> { // list of aves per question + ave # of responses
+fun Ratings.getAvesAndTotal(): Pair<List<Double>, Int> { // list of aves per question + ave # of responses
     return map { it.getRatingAve() } to map { it.sum() }.average().toInt()
 }
