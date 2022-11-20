@@ -43,8 +43,8 @@ class Entry(
         }
     )
 
-    val semYear
-        get() = with(term.split("  ")) { SemYear(Semester.valueOf(first()), last().toInt()) }
+    val semester
+        get() = with(term.split("  ")) { Semester(SemesterType.valueOf(first()), last().toInt()) }
 
     val course
         get() = code.split(':')[2]
