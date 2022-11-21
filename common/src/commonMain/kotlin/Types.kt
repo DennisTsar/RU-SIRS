@@ -11,10 +11,18 @@ fun <T> SchoolDeptsMap<T>.forEachDept(action: (String, String, T) -> Unit) {
     }
 }
 
-fun <T, R> SchoolDeptsMap<T>.mapEachDept(action: (String, String, T) -> R): SchoolDeptsMap<R> {
+fun <T, R> SchoolDeptsMap<T>.mapEachDept(transform: (String, String, T) -> R): SchoolDeptsMap<R> {
     return mapValues { (school, deptMap) ->
         deptMap.mapValues { (dept, something) ->
-            action(school, dept, something)
+            transform(school, dept, something)
+        }
+    }
+}
+
+fun <T, R> SchoolDeptsMap<T>.flatMapEachDept(transform: (String, String, T) -> List<R>): List<R> {
+    return flatMap { (school, deptMap) ->
+        deptMap.flatMap { (dept, something) ->
+            transform(school, dept, something)
         }
     }
 }
