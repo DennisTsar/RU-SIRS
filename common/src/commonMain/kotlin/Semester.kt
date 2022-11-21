@@ -1,14 +1,14 @@
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Semester(val type: SemesterType, val year: Int) : Comparable<Semester> {
     override fun compareTo(other: Semester): Int {
-        return if (year != other.year)
-            year.compareTo(other.year)
-        else
-            type.compareTo(other.type)
+        return numValue.compareTo(other.numValue)
     }
 
     constructor(num: Int) : this(SemesterType.values()[num % 2], num / 2)
 
-    fun toInt() = year * 2 + if (type == SemesterType.Spring) 0 else 1
+    val numValue get() = year * 2 + if (type == SemesterType.Spring) 0 else 1
 }
 
 enum class SemesterType(val num: Int) {
