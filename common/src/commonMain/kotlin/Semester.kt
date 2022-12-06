@@ -15,5 +15,4 @@ enum class SemesterType(val num: Int) {
     Spring(1), Fall(9); // !! Note that this order matters !!
 
     fun other(): SemesterType = if (this == Spring) Fall else Spring
-
 }
