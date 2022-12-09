@@ -27,10 +27,10 @@ class GithubSource : RemoteApi, EntriesFromFileSource, SchoolMapSource, ExtraDat
         }
     }
 
-    override suspend fun getEntriesFromDir(school: String, dept: String, folderNum: Int): List<Entry> =
+    override suspend fun getEntries(school: String, dept: String, folderNum: Int): List<Entry> =
         ghClient.get("json-data/data-$folderNum/$school/$dept.json").body()
 
-    override suspend fun getEntriesByProfFromDir(school: String, dept: String, folderNum: Int): EntriesByProf =
+    override suspend fun getEntriesByProf(school: String, dept: String, folderNum: Int): EntriesByProf =
         ghClient.get("json-data/data-$folderNum-by-prof/$school/$dept.json").body()
 
     override suspend fun getSchoolMap(): Map<String, School> =
@@ -57,6 +57,6 @@ class GithubSource : RemoteApi, EntriesFromFileSource, SchoolMapSource, ExtraDat
     override suspend fun getAllInstructors(): List<Instructor> =
         ghClient.get("json-data/extra-data/allInstructors.json").body()
 
-    override suspend fun getDirSchoolMap(dataDir: String): Map<String, School> =
+    override suspend fun getSchoolMap(dataDir: String): Map<String, School> =
         ghClient.get("json-data/$dataDir/schoolMap.json").body()
 }
