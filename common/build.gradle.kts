@@ -11,7 +11,6 @@ group = "dev.letter"
 kotlin {
     jvm()
     js(IR) {
-        tasks.withType(DukatTask::class) { enabled = false }
         browser()
     }
 
@@ -32,3 +31,5 @@ kotlin {
         }
     }
 }
+
+tasks.withType<DukatTask> { enabled = false }
