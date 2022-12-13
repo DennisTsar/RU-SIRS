@@ -5,7 +5,7 @@ data class School(
     val code: String,
     val name: String,
     val depts: Set<String>,
-    val campuses: Set<Campus>? = null,
+    val campuses: Set<Campus>,
 )
 
 enum class Campus {
