@@ -5,7 +5,12 @@ data class School(
     val code: String,
     val name: String,
     val depts: Set<String>,
+    val campuses: Set<Campus>? = null,
 )
+
+enum class Campus {
+    NB, CM, NK
+}
 
 suspend fun <T> Collection<School>.generateSchoolMap(
     generator: suspend (school: String, dept: String) -> T,
