@@ -8,8 +8,10 @@ data class School(
     val campuses: Set<Campus>,
 )
 
-enum class Campus {
-    NB, CM, NK
+enum class Campus(val fullName: String) {
+    NB("New-Brunswick"),
+    CM("Camden"),
+    NK("Newark"),
 }
 
 suspend fun <T> Collection<School>.generateSchoolMap(
