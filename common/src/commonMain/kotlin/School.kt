@@ -6,12 +6,17 @@ data class School(
     val name: String,
     val depts: Set<String>,
     val campuses: Set<Campus>,
+    val level: LevelOfStudy,
 )
 
 enum class Campus(val fullName: String) {
     NB("New-Brunswick"),
     CM("Camden"),
     NK("Newark"),
+}
+
+enum class LevelOfStudy {
+    U, G
 }
 
 suspend fun <T> Collection<School>.generateSchoolMap(
