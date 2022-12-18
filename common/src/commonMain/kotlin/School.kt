@@ -15,8 +15,8 @@ enum class Campus(val fullName: String) {
     NK("Newark"),
 }
 
-enum class LevelOfStudy {
-    U, G
+enum class LevelOfStudy(val fullName: String) {
+    U("Undergraduate"), G("Graduate")
 }
 
 suspend fun <T> Collection<School>.generateSchoolMap(
