@@ -1,6 +1,6 @@
 [versions]
-jetbrains-compose = "1.2.1"
-kobweb = "0.11.2"
+jetbrains-compose = "1.2.2"
+kobweb = "0.11.4"
 kotlin = "1.7.20"
 ktor = "2.2.1"
 coroutines = "1.6.4"
