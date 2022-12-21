@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.dukat.DukatTask
-
 @Suppress("DSL_SCOPE_VIOLATION") // just to avoid "libs" red underline
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -31,5 +29,3 @@ kotlin {
         }
     }
 }
-
-tasks.withType<DukatTask> { enabled = false }
