@@ -2,7 +2,10 @@
 
 A website & tool for viewing response from Rutgers SIRS class surveys. Built with 100% Kotlin.
 
-## Technologies
+The data comes from the [official SIRS website](https://sirs.rutgers.edu/index.php) (currently down) and covers all
+published surveys from the Spring 2014 through Spring 2022 semesters.
+
+## Technologies + Tools
 
 - [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html), targeting JS and JVM
 - [Kobweb](https://github.com/varabyte/kobweb), a framework on top
@@ -14,6 +17,7 @@ A website & tool for viewing response from Rutgers SIRS class surveys. Built wit
   analytics [here](https://ru-sirs.goatcounter.com/))
 - [Ktor](https://ktor.io/), [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines),
   and [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) for getting, storing, and parsing data
+- [FontAwesome](https://fontawesome.com/) for icons
 - [Balance text utility](https://github.com/adobe/balance-text) for a custom CSS property
 
 ## Project Structure
