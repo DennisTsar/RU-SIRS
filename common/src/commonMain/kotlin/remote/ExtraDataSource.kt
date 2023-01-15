@@ -12,4 +12,5 @@ interface ExtraDataSource {
     suspend fun getTeachingData(school: String, dept: String, term: String = "S23"): Map<String, List<String>>
     suspend fun getDeptMap(): Map<String, String>
     suspend fun getAllInstructors(dir: String = "data-9-by-prof"): Map<String, List<Instructor>>
+    suspend fun getCourseNames(school: String, dept: String): Map<String, String>
 }
