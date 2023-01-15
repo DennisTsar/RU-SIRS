@@ -11,6 +11,9 @@ data class Semester(val type: SemesterType, val year: Int) : Comparable<Semester
     val numValue get() = year * 2 + if (type == SemesterType.Spring) 0 else 1
 }
 
+fun Semester.prev(byAmount: Int = 1) = Semester(numValue - byAmount)
+fun Semester.next(byAmount: Int = 1) = Semester(numValue + byAmount)
+
 enum class SemesterType(val num: Int) {
     Spring(1), Fall(9); // !! Note that this order matters !!
 
