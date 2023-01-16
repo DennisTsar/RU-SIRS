@@ -23,14 +23,6 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
-          
-      # Set up Homebrew
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      # Installing Kobweb with brew
-      - name: Install Kobweb
-        run: brew install varabyte/tap/kobweb
 
       # Validate wrapper
       - name: Validate Gradle Wrapper
@@ -38,8 +30,11 @@ jobs:
 
       # Build application
       - name: Build
-        run: kobweb export --layout static --mode dumb # "dumb" prevents java awt display error
-        working-directory: ./site
+        run: ./gradlew kobwebExport -PkobwebReuseServer=false -PkobwebEnv=DEV -PkobwebRunLayout=KOBWEB -PkobwebBuildTarget=RELEASE -PkobwebExportLayout=STATIC
+
+      # Stop kobweb server
+      - name: Stop Server
+        run: ./gradlew kobwebStop
 
       # If main branch update, deploy to gh-pages
       - name: Deploy 🚀
