@@ -33,6 +33,9 @@ class GithubSource : RemoteApi, EntriesFromFileSource, SchoolMapSource, ExtraDat
     override suspend fun getEntriesByProf(school: String, dept: String, folderNum: Int): EntriesByProf =
         ghClient.get("json-data/data-$folderNum-by-prof/$school/$dept.json").body()
 
+    override suspend fun getStatsByProf(school: String, dept: String): Map<String, InstructorStats> =
+        ghClient.get("json-data/data-9-by-prof-stats/$school/$dept.json").body()
+
     override suspend fun getSchoolMap(): Map<String, School> =
         ghClient.get("json-data/extra-data/schoolMap.json").body()
 

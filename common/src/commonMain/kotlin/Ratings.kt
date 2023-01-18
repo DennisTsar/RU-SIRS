@@ -1,5 +1,10 @@
 typealias Ratings = List<List<Int>>
 
+class RatingStats(
+    val ratings: List<Double>,
+    val numResponses: Int,
+)
+
 // returns list of (# of 1s, # of 2s, ... # of 5s) for each question
 // note that entries must have scores.size>=100 - maybe throw error?
 // ***IMPORTANT NOTE*** By default, don't give ratings for question index 7 - as it's mostly irrelevant
@@ -13,7 +18,7 @@ fun List<Entry>.getTotalRatings(excludeQuestion7: Boolean = true): Ratings {
     }.combine()
 }
 
-private fun Collection<Ratings>.combine(): Ratings {
+fun Collection<Ratings>.combine(): Ratings {
     return reduce { accByQuestion, responsesByQ ->
         // nums from each entry get zipped with each other, by question
         accByQuestion.zip(responsesByQ) { accRatings, ratings ->
@@ -32,6 +37,6 @@ fun List<Int>.getRatingStats(): Pair<Double, Int> {
 
 fun List<Int>.getRatingAve(): Double = getRatingStats().first
 
-fun Ratings.getAvesAndTotal(): Pair<List<Double>, Int> { // list of aves per question + ave # of responses
-    return map { it.getRatingAve() } to map { it.sum() }.average().toInt()
+fun Ratings.getAvesAndTotal(): RatingStats { // list of aves per question + ave # of responses
+    return RatingStats(ratings = map { it.getRatingAve() }, numResponses = map { it.sum() }.average().toInt())
 }
