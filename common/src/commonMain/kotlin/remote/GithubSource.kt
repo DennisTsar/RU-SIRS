@@ -1,8 +1,7 @@
 package remote
 
-import EntriesByProf
-import Entry
 import Instructor
+import InstructorStats
 import School
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
@@ -10,18 +9,20 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.*
-import io.ktor.serialization.kotlinx.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
+/** This class contains only the methods that are used by the website,
+ * even though other data is also accessible from GitHub.
+ * In practice, that data can just be accessed locally.
+ */
 class GithubSource(
-    private val repoPath: String = "/DennisTsar/Rutgers-SIRS/master/",
-    private val mainJsonDir: String = "json-data/data-9",
-    private val extraJsonDir: String = "json-data/extra-data",
-    private val baseJsonDir: String = "json-data",
-) : RemoteApi, EntriesFromFileSource, SchoolMapSource, ExtraDataSource {
+    repoPath: String = "/DennisTsar/Rutgers-SIRS/master/",
+    private val paths: WebsitePaths = WebsitePaths(),
+) : RemoteApi, WebsiteDataSource {
     private val ghClient = client.config {
         install(ContentNegotiation) {
-            serialization(ContentType.Text.Plain, Json)
+            json(Json, ContentType.Text.Plain)
         }
         defaultRequest {
             url {
@@ -32,47 +33,29 @@ class GithubSource(
         }
     }
 
-    override suspend fun getEntries(school: String, dept: String, folderNum: Int): List<Entry> =
-        ghClient.get("$baseJsonDir/data-$folderNum/$school/$dept.json").body()
-
-    override suspend fun getEntriesByProf(school: String, dept: String, folderNum: Int): EntriesByProf =
-        ghClient.get("$baseJsonDir/data-$folderNum-by-prof/$school/$dept.json").body()
-
     override suspend fun getStatsByProf(school: String, dept: String): Map<String, InstructorStats> =
-        ghClient.get("$mainJsonDir-by-prof-stats/$school/$dept.json").body()
+        ghClient.get("${paths.statsByProfDir}/$school/$dept.json").body()
 
-    override suspend fun getSchoolMap(): Map<String, School> =
-        ghClient.get("$extraJsonDir/schoolMap.json").body()
+    override suspend fun getCourseNames(school: String, dept: String): Map<String, String> =
+        ghClient.get("${paths.courseNamesDir}/$school/$dept.json").body()
 
-    @Deprecated(
-        "Data is now stored in separate files by dept. This function is kept to get F22 data.",
-        ReplaceWith("GithubSource.getTeachingData"),
-    )
-    override suspend fun getLatestInstructors(term: String): Map<String, List<String>> =
-        ghClient.get("$extraJsonDir/$term-instructors.json").body()
-
-    override suspend fun getTeachingData(school: String, dept: String, term: String): Map<String, List<String>> {
+    override suspend fun getTeachingData(school: String, dept: String): Map<String, List<String>> {
         return try {
-            ghClient.get("$extraJsonDir/$term-teaching/$school/$dept.json").body()
+            ghClient.get("${paths.teachingDataDir}/$school/$dept.json").body()
         } catch (e: JsonConvertException) {
             emptyMap()
         }
     }
 
-    override suspend fun getCourseNames(school: String, dept: String): Map<String, String> {
+    override suspend fun getAllInstructors(): Map<String, List<Instructor>> {
         return try {
-            ghClient.get("$extraJsonDir/courseNames/$school/$dept.json").body()
+            ghClient.get(paths.allInstructorsFile).body()
         } catch (e: JsonConvertException) {
             emptyMap()
         }
     }
 
-    override suspend fun getDeptMap(): Map<String, String> =
-        ghClient.get("$extraJsonDir/deptNameMap.json").body()
+    override suspend fun getDeptMap(): Map<String, String> = ghClient.get(paths.deptMapFile).body()
 
-    override suspend fun getAllInstructors(dir: String): Map<String, List<Instructor>> =
-        ghClient.get("$baseJsonDir/$dir/allInstructors.json").body()
-
-    override suspend fun getSchoolMap(dataDir: String): Map<String, School> =
-        ghClient.get("$baseJsonDir/$dataDir/schoolMap.json").body()
+    override suspend fun getSchoolMap(): Map<String, School> = ghClient.get(paths.schoolMapFile).body()
 }

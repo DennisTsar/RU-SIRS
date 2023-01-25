@@ -1,6 +1,3 @@
-package remote
-
-import Ratings
 import kotlinx.serialization.Serializable
 
 @Serializable
