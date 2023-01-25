@@ -1,8 +1,8 @@
 package remote
 
-import Instructor
-import InstructorStats
-import School
+import data.Instructor
+import data.InstructorStats
+import data.School
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*

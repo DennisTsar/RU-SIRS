@@ -1,3 +1,5 @@
+package data
+
 typealias EntriesByProf = Map<String, List<Entry>>
 typealias EntriesByProfMap = SchoolDeptsMap<EntriesByProf>
 typealias EntriesMap = SchoolDeptsMap<List<Entry>>

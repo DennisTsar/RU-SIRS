@@ -11,7 +11,7 @@ actual val ktorClient = HttpClient(CIO) {
         level = LogLevel.INFO
     }
 
-    //These next two seem to be required when making a lot of requests
+    //These data.next two seem to be required when making a lot of requests
     //Number values chosen arbitrarily, perhaps there's a better way?
     install(HttpTimeout) {
         connectTimeoutMillis = 100000

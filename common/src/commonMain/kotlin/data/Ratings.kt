@@ -1,3 +1,5 @@
+package data
+
 typealias Ratings = List<List<Int>>
 
 class RatingStats(

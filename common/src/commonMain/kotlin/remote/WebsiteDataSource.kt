@@ -1,8 +1,8 @@
 package remote
 
-import Instructor
-import InstructorStats
-import School
+import data.Instructor
+import data.InstructorStats
+import data.School
 
 interface WebsiteDataSource {
     suspend fun getStatsByProf(school: String, dept: String): Map<String, InstructorStats>

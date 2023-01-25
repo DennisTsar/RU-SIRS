@@ -1,3 +1,5 @@
+package data
+
 val TenQs = listOf(
     "The instructor was prepared for class and presented the material in an organized manner",
     "The instructor responded effectively to student comments and questions",

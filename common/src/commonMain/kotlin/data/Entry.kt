@@ -1,3 +1,5 @@
+package data
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -36,7 +38,7 @@ class Entry(
         }.run {
             // this gets additional labels besides Strong Disagree/Strong Agree - see record%5D=597617 as ex.
 //            s.split("<th class='chart hidden' colspan='5'>\n  \t<th class='text responseCol'>").map {
-//                it.substringBefore("\n") to it.substringAfterBefore("</th>\n  \t<th  class='text responseCol'>","\n")
+//                it.substringBefore("\n") to it.data.substringAfterBefore("</th>\n  \t<th  class='text responseCol'>","\n")
 //            }
             val mappedQs = drop(1).filter { it != "" }.map { QsMap.getOrElse(it) { it } }
             if (mappedQs == QsMap.values.toList()) null else mappedQs
