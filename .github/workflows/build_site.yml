@@ -33,7 +33,7 @@ jobs:
 
       # Install Kobweb
       - name: Install Kobweb
-        uses: jaxxstorm/action-install-gh-release@v1.5.0
+        uses: jaxxstorm/action-install-gh-release@v1.9.0
         with: # Grab a specific tag
           repo: varabyte/kobweb
           tag: cli-v0.9.10
