@@ -33,11 +33,7 @@ jobs:
 
       # Install Kobweb
       - name: Install Kobweb
-        uses: jaxxstorm/action-install-gh-release@v1.9.0
-        with: # Grab a specific tag
-          repo: varabyte/kobweb
-          tag: cli-v0.9.10
-          cache: enable # not expected to speed up installation
+        run: gh --repo varabyte/kobweb release download cli-v0.9.10
           
       # Export Site
       - name: Export Site
