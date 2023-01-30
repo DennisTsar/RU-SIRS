@@ -17,3 +17,5 @@ suspend fun <A, B> Iterable<A>.pmap(f: suspend (A) -> B): List<B> =
 
 suspend fun <A, B, C> Map<A, B>.pmap(f: suspend (Map.Entry<A, B>) -> C): List<C> =
     coroutineScope { map { async { f(it) } }.awaitAll() }
+
+fun <T> Collection<T>.prepend(element: T): List<T> = listOf(element) + this
