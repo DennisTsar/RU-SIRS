@@ -34,6 +34,8 @@ jobs:
       # Install Kobweb
       - name: Install Kobweb
         run: gh --repo varabyte/kobweb release download cli-v0.9.10
+        env:
+          GH_TOKEN: ${{ github.token }}
           
       # Export Site
       - name: Export Site
