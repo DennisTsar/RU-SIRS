@@ -36,8 +36,13 @@ class GithubSource(
     override suspend fun getStatsByProf(school: String, dept: String): Map<String, InstructorStats> =
         ghClient.get("${paths.statsByProfDir}/$school/$dept.json").body()
 
-    override suspend fun getCourseNames(school: String, dept: String): Map<String, String> =
-        ghClient.get("${paths.courseNamesDir}/$school/$dept.json").body()
+    override suspend fun getCourseNames(school: String, dept: String): Map<String, String> {
+        return try {
+            ghClient.get("${paths.courseNamesDir}/$school/$dept.json").body()
+        } catch (e: JsonConvertException) {
+            emptyMap()
+        }
+    }
 
     override suspend fun getTeachingData(school: String, dept: String): Map<String, List<String>> {
         return try {
@@ -47,13 +52,8 @@ class GithubSource(
         }
     }
 
-    override suspend fun getAllInstructors(): Map<String, List<Instructor>> {
-        return try {
-            ghClient.get(paths.allInstructorsFile).body()
-        } catch (e: JsonConvertException) {
-            emptyMap()
-        }
-    }
+    override suspend fun getAllInstructors(): Map<String, List<Instructor>> =
+        ghClient.get(paths.allInstructorsFile).body()
 
     override suspend fun getDeptMap(): Map<String, String> = ghClient.get(paths.deptMapFile).body()
 
