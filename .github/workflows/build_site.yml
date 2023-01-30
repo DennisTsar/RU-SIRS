@@ -15,7 +15,9 @@ jobs:
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v3
-      - run: git submodule init site
+      - run: |
+          git submodule init site
+          git submodule update site
 
 
       # Set up Java environment for the next steps
