@@ -36,7 +36,7 @@ class GithubSource(
     override suspend fun getStatsByProf(school: String, dept: String): Map<String, InstructorStats> =
         ghClient.get("${paths.statsByProfDir}/$school/$dept.json").body()
 
-    override suspend fun getCourseNames(school: String, dept: String): Map<String, String> {
+    override suspend fun getCourseNamesOrEmpty(school: String, dept: String): Map<String, String> {
         return try {
             ghClient.get("${paths.courseNamesDir}/$school/$dept.json").body()
         } catch (e: JsonConvertException) {
@@ -44,7 +44,7 @@ class GithubSource(
         }
     }
 
-    override suspend fun getTeachingData(school: String, dept: String): Map<String, List<String>> {
+    override suspend fun getTeachingDataOrEmpty(school: String, dept: String): Map<String, List<String>> {
         return try {
             ghClient.get("${paths.teachingDataDir}/$school/$dept.json").body()
         } catch (e: JsonConvertException) {
