@@ -15,10 +15,12 @@ jobs:
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v3
-      - run: |
+
+      # Check out site submodule
+      - name: Check out submodule
+        run: |
           git submodule init site
           git submodule update site
-
 
       # Set up Java environment for the next steps
       - name: Set up Java
@@ -31,16 +33,13 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      # Install Kobweb
-      - name: Install Kobweb
-        run: gh --repo varabyte/kobweb release download cli-v0.9.10
-        env:
-          GH_TOKEN: ${{ github.token }}
-          
-      # Export Site
-      - name: Export Site
-        run: kobweb export --layout static --mode dumb # "dumb" prevents java awt display error
-        working-directory: ./site
+      # Build application
+      - name: Build
+        run: ./gradlew kobwebExport -PkobwebReuseServer=false -PkobwebEnv=DEV -PkobwebRunLayout=KOBWEB -PkobwebBuildTarget=RELEASE -PkobwebExportLayout=STATIC
+
+      # Stop kobweb server
+      - name: Stop Server
+        run: ./gradlew kobwebStop
 
       # If main branch update, deploy to gh-pages
       - name: Deploy 🚀
