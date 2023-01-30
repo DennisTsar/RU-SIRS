@@ -31,13 +31,18 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      # Build application
-      - name: Build
-        run: ./gradlew kobwebExport -PkobwebReuseServer=false -PkobwebEnv=DEV -PkobwebRunLayout=KOBWEB -PkobwebBuildTarget=RELEASE -PkobwebExportLayout=STATIC
-
-      # Stop kobweb server
-      - name: Stop Server
-        run: ./gradlew kobwebStop
+      # Install Kobweb
+      - name: Install Kobweb
+        uses: jaxxstorm/action-install-gh-release@v1.5.0
+        with: # Grab a specific tag
+          repo: varabyte/kobweb
+          tag: cli-v0.9.10
+          cache: enable # not expected to speed up installation
+          
+      # Export Site
+      - name: Export Site
+        run: kobweb export --layout static --mode dumb # "dumb" prevents java awt display error
+        working-directory: ./site
 
       # If main branch update, deploy to gh-pages
       - name: Deploy 🚀
