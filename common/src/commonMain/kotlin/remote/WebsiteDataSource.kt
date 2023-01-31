@@ -16,18 +16,13 @@ interface WebsiteDataSource {
 
 /** Useful for testing */
 suspend fun WebsiteDataSource.getAllData(school: String, dept: String, print: Boolean = true) {
-    val schoolMap = getSchoolMap().also { require(it.isNotEmpty()) }
-    val allInstructors = getAllInstructors().also { require(it.isNotEmpty()) }
-    val deptNames = getDeptMap().also { require(it.isNotEmpty()) }
-    val specificSchoolStats = getStatsByProf(school, dept).also { require(it.isNotEmpty()) }
-    val specificCourseNames = getCourseNamesOrEmpty(school, dept).also { require(it.isNotEmpty()) }
-    val specificTeachingProfs = getTeachingDataOrEmpty(school, dept).also { require(it.isNotEmpty()) }
-    if (print) {
-        println(schoolMap)
-        println(allInstructors)
-        println(deptNames)
-        println(specificSchoolStats)
-        println(specificCourseNames)
-        println(specificTeachingProfs)
-    }
+    val data = listOf(
+        getSchoolMap(),
+        getAllInstructors(),
+        getDeptMap(),
+        getStatsByProf(school, dept),
+        getCourseNamesOrEmpty(school, dept),
+        getTeachingDataOrEmpty(school, dept),
+    ).onEach { require(it.isNotEmpty()) }
+    if (print) data.forEach { println(it) }
 }
