@@ -10,26 +10,28 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.json.Json
 
 /** This class contains only the methods that are used by the website,
  * even though other data is also accessible from GitHub.
  * In practice, that data can just be accessed locally.
  */
 class GithubSource(
-    repoPath: String = "/DennisTsar/Rutgers-SIRS/master/",
+    repoPath: String = "DennisTsar/Rutgers-SIRS",
     private val paths: WebsitePaths = WebsitePaths(),
+    ghToken: String? = null,
 ) : RemoteApi, WebsiteDataSource {
     private val ghClient = client.config {
         install(ContentNegotiation) {
-            json(Json, ContentType.Text.Plain)
+            json()
         }
         defaultRequest {
             url {
                 protocol = URLProtocol.HTTPS
-                host = "raw.githubusercontent.com"
-                encodedPath = repoPath
+                host = "api.github.com"
+                encodedPath = "/repos/$repoPath/contents/"
             }
+            accept(ContentType.parse("application/vnd.github.raw"))
+            ghToken?.let { bearerAuth(it) }
         }
     }
 
@@ -58,4 +60,14 @@ class GithubSource(
     override suspend fun getDeptMap(): Map<String, String> = ghClient.get(paths.deptMapFile).body()
 
     override suspend fun getSchoolMap(): Map<String, School> = ghClient.get(paths.schoolMapFile).body()
+
+    companion object {
+        val FakeSource = GithubSource(
+            repoPath = "DennisTsar/RU-SIRS",
+            paths = WebsitePaths(
+                baseDir = "fake-data",
+                allInstructorsFile = "fake-data/data-9-by-prof-stats/allInstructors.json" // will not be required soon
+            )
+        )
+    }
 }
