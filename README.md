@@ -2,7 +2,7 @@
 
 A website & tool for viewing response from Rutgers SIRS class surveys. Built with 100% Kotlin.
 
-The data comes from the [official SIRS website](https://sirs.rutgers.edu/index.php) (currently down) and covers all
+The data comes from the [official SIRS website](https://sirs.rutgers.edu/index.php) and covers all
 published surveys from the Spring 2014 through Spring 2022 semesters.
 
 ## Technologies + Tools
@@ -25,13 +25,10 @@ published surveys from the Spring 2014 through Spring 2022 semesters.
 The project is divided into 3 modules:
 
 - `common` - Contains shared code between the JVM and JS targets
-- `local` - Contains the JVM target, which was used to scrape and parse the data from the SIRS website
+- `data` - Contains the JVM target, which was used to scrape and parse the data from the SIRS website
 - `site` - Contains the JS target, which is the website UI
 
 See the individual READMEs for more details.
-
-All the scraped data is available in the `local/json-data` directory, with `data-9-by-prof` and `extra-data` being
-actively used.
 
 Note that the project also contains two automated GitHub Actions:
 
