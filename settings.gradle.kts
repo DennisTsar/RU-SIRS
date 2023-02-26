@@ -9,5 +9,5 @@ pluginManagement {
 rootProject.name = "RU-SIRS"
 
 include(":site")
-include(":local")
+include(":data")
 include(":common")
