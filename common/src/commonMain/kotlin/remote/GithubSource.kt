@@ -10,6 +10,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 /** This class contains only the methods that are used by the website,
  * even though other data is also accessible from GitHub.
@@ -21,14 +22,15 @@ class GithubSource(
     ghToken: String? = null,
 ) : RemoteApi, WebsiteDataSource {
     private val ghClient = client.config {
+        // only use official api if needed for authentication, as it is rate limited
         install(ContentNegotiation) {
-            json()
+            if (ghToken == null) json(Json, ContentType.Text.Plain) else json()
         }
         defaultRequest {
             url {
                 protocol = URLProtocol.HTTPS
-                host = "api.github.com"
-                encodedPath = "/repos/$repoPath/contents/"
+                host = if (ghToken == null) "raw.githubusercontent.com" else "api.github.com"
+                encodedPath = if (ghToken == null) "/$repoPath/master/" else "/repos/$repoPath/contents/"
             }
             accept(ContentType.parse("application/vnd.github.raw"))
             ghToken?.let { bearerAuth(it) }
@@ -64,10 +66,7 @@ class GithubSource(
     companion object {
         val FakeSource = GithubSource(
             repoPath = "DennisTsar/RU-SIRS",
-            paths = WebsitePaths(
-                baseDir = "fake-data",
-                allInstructorsFile = "fake-data/data-9-by-prof-stats/allInstructors.json" // will not be required soon
-            )
+            paths = WebsitePaths(baseDir = "fakeData")
         )
     }
 }
